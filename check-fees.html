@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fee Status</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h2>Check Fee Payment</h2>
+<input type="text" id="studentId" placeholder="Enter Reg No" />
+<button onclick="checkFees()">Check</button>
+<p id="result"></p>
+
+<script>
+    function checkFees() {
+        const regNo = document.getElementById('studentId').value;
+        // Simulated lookup
+        const paid = ['ST001', 'ST003'];
+        const result = document.getElementById('result');
+        if (paid.includes(regNo)) {
+            result.textContent = `Student ${regNo} has PAID fees.`;
+        } else {
+            result.textContent = `Student ${regNo} has NOT PAID fees.`;
+        }
+    }
+</script>
+</body>
+</html>
