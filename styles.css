@@ -1,10 +1,19 @@
 /* styles.css */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Roboto', Arial, sans-serif;
   background: #f4f8fb;
   color: #222;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .navbar {
@@ -75,7 +84,7 @@ body {
 .btn {
   background: #003366;
   color: #fff;
-  padding: 0.8em 2em;
+  padding: 0.8em 2em !important;
   border-radius: 5px;
   text-decoration: none;
   font-weight: 500;
@@ -95,6 +104,8 @@ body {
   align-items: flex-start;
   min-height: 80vh;
   background: #f4f8fb;
+  overflow-y: auto;
+  padding-bottom: 3em; /* Space for footer */
 }
 
 .form-container, .courses-container, .fees-container {
@@ -105,6 +116,7 @@ body {
   max-width: 400px;
   width: 100%;
   margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 form {
@@ -170,6 +182,106 @@ form input:focus {
   color: #c62828;
 }
 
+.footer {
+  background: #002244;
+  color: #fff;
+  padding: 2em 0 0.5em 0;
+  margin-top: 3em;
+  border-top: 4px solid #ffcc00;
+  font-size: 1em;
+  bottom: 0;
+  flex-shrink: 0;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2em;
+  gap: 2em;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.footer-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: #fff;
+  object-fit: contain;
+  border: 2px solid #ffcc00;
+}
+
+.footer-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ffcc00;
+}
+
+.footer-school {
+  font-size: 1em;
+  color: #fff;
+}
+
+.footer-contact {
+  font-size: 0.98em;
+  line-height: 1.7;
+}
+
+.footer-contact a {
+  color: #ffcc00;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
+.footer-social {
+  display: flex;
+  gap: 0.7em;
+  align-items: center;
+  font-size: 1.5em;
+}
+
+.footer-social-icon {
+  color: #ffcc00;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-social-icon:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  color: #bbb;
+  font-size: 0.95em;
+  margin-top: 1.5em;
+  padding-bottom: 0.5em;
+  border-top: 1px solid #224466;
+}
+
+@media (max-width: 800px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2em;
+    padding: 0 1em;
+  }
+  .footer-brand {
+    margin-bottom: 0.5em;
+  }
+}
+
 @media (max-width: 600px) {
   .navbar .container {
     flex-direction: column;
@@ -186,4 +298,97 @@ form input:focus {
     padding: 1.2em 0.5em;
     max-width: 98vw;
   }
+  .form-main, .courses-main, .fees-main {
+    padding-bottom: 5em;
+  }
+}
+
+/* --- Dashboard Layout --- */
+.dashboard {
+  display: flex;
+  min-height: 80vh;
+  background: #f4f8fb;
+}
+.sidebar {
+  width: 220px;
+  background: #003366;
+  color: #fff;
+  padding: 2em 0 2em 0;
+  min-height: 80vh;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0 0 0 1.5em;
+  margin: 0;
+  width: 100%;
+}
+.sidebar-link {
+  display: block;
+  color: #fff;
+  background: none;
+  border: none;
+  padding: 0.7em 0.5em;
+  margin-bottom: 0.3em;
+  font-size: 1.08em;
+  border-radius: 5px 0 0 5px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, color 0.2s;
+}
+.sidebar-link:hover, .sidebar-link:focus {
+  background: #0055a5;
+  color: #ffcc00;
+  outline: none;
+}
+.dashboard-content {
+  flex: 1;
+  padding: 2.5em 2em 2em 2em;
+  background: #fff;
+  border-radius: 0 12px 12px 0;
+  margin: 2em 2em 2em 0;
+  min-width: 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+.dashboard-section {
+  margin-bottom: 2em;
+}
+#dashboardWelcome {
+  margin-bottom: 2em;
+}
+@media (max-width: 900px) {
+  .dashboard {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: stretch;
+    padding: 0.5em 0;
+    min-height: unset;
+    box-shadow: none;
+  }
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    padding: 0 0.5em;
+  }
+  .sidebar-link {
+    border-radius: 5px;
+    margin-bottom: 0;
+    margin-right: 0.5em;
+    padding: 0.7em 1em;
+  }
+  .dashboard-content {
+    margin: 1em 0.5em;
+    border-radius: 0 0 12px 12px;
+    padding: 1.2em 0.5em;
+  }
+}
+
+main, .form-main, .courses-main, .fees-main, .dashboard-content {
+  flex: 1 0 auto;
 }
