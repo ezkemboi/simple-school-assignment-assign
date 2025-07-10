@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="./logo.png" class="header-logo"  height="50px" width="100px"/>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" id="nav-home">Home</a></li>
+                <li><a href="student-registration.html" id="nav-student-register">Student Registration</a></li>
+                <li><a href="staff-registration.html" id="nav-staff-register">Staff Registration</a></li>
+                <li><a href="#" id="nav-logout" style="display:none;">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="form-main">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                <label for="role">Role</label>
+                <div class="role-select-wrapper">
+                    <select id="role" name="role" required class="custom-select">
+                        <option value="student">Student</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div id="loginError" class="error-message"></div>
+            <div class="register-links">
+                <span>Don't have an account?</span>
+                <a href="student-registration.html" class="register-link">Register as Student</a>
+                <a href="staff-registration.html" class="register-link">Register as Staff</a>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="./logo.png" alt="Gretsa University Logo" class="footer-logo">
+                <div>
+                    <div class="footer-school">The Best University in Kenya</div>
+                </div>
+            </div>
+            <div class="footer-contact">
+                <div>Email: <a href="mailto:info@gretsauniversity.ac.ke">info@gretsauniversity.ac.ke</a></div>
+                <div>Phone: <a href="tel:+254700000000">+254 700 000 000</a></div>
+                <div>Address: Thika, Kenya</div>
+            </div>
+            <div class="footer-social">
+                <a href="#" title="Facebook" class="footer-social-icon">🌐</a>
+                <a href="#" title="Twitter" class="footer-social-icon">🐦</a>
+                <a href="#" title="Instagram" class="footer-social-icon">📸</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Gretsa University. All rights reserved.
+        </div>
+    </footer>
+    <script src="scripts/session.js"></script>
+    <script src="scripts/login.js"></script>
+</body>
+</html> 

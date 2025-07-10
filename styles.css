@@ -219,6 +219,11 @@ form input:focus {
   border: 2px solid #ffcc00;
 }
 
+.header-logo {
+  background: #fff;
+  border-radius: 6px;
+}
+
 .footer-title {
   font-size: 1.2em;
   font-weight: bold;
@@ -442,4 +447,74 @@ main, .form-main, .courses-main, .fees-main, .dashboard-content {
     padding: 0.7em 0.5em;
     position: relative;
   }
+}
+
+/* --- Custom Role Select for Login --- */
+.role-select-wrapper {
+  margin-bottom: 1.2em;
+}
+.custom-select {
+  width: 100%;
+  padding: 0.8em 1em;
+  border: 1.5px solid #cfd8dc;
+  border-radius: 6px;
+  font-size: 1em;
+  background: #f9fbfc;
+  transition: border 0.2s, box-shadow 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.custom-select:focus {
+  border-color: #0055a5;
+  outline: none;
+  box-shadow: 0 0 0 2px #e3f0fc;
+}
+
+/* --- Register Links as Buttons --- */
+.register-links {
+  margin-top: 1.2em;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.register-links span {
+  font-size: 1em;
+  color: #003366;
+  margin-right: 0.5em;
+}
+.btn-secondary {
+  background: #fff;
+  color: #003366;
+  border: 2px solid #003366;
+  padding: 0.7em 1.5em;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  text-decoration: none;
+  margin: 0 0.2em;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: inline-block;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+  background: #003366;
+  color: #ffcc00;
+  border-color: #ffcc00;
+}
+.register-link {
+  color: #0055a5;
+  text-decoration: none;
+  font-weight: 500;
+  margin: 0 0.5em;
+  font-size: 1em;
+  transition: color 0.2s;
+}
+.register-link:hover, .register-link:focus {
+  text-decoration: underline;
+  color: #003366;
 }
