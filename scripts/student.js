@@ -27,7 +27,13 @@ document.getElementById('studentRegForm').addEventListener('submit', function(e)
         return;
     }
 
-    const student = { name, regNo, email, password, role: 'STUDENT' };
+    // Add all mock courses and fees to new student
+    const courses = JSON.parse(localStorage.getItem('courses')) || [];
+    const student = { 
+        name, regNo, email, password, role: 'STUDENT',
+        registeredCourses: courses,
+        fees: { amount: 50000, status: 'Paid' }
+    };
     students.push(student);
     localStorage.setItem('students', JSON.stringify(students));
     // Set current user and redirect

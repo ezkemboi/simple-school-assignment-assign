@@ -7,10 +7,47 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  // --- MOCK DATA SETUP ---
+  // Add mock registered courses and fees for all students if not present
+  (function() {
+    // Mock registered courses (all courses)
+    const courses = JSON.parse(localStorage.getItem('courses')) || [];
+    // Mock students
+    let students = JSON.parse(localStorage.getItem('students'));
+    if (!students || !Array.isArray(students) || students.length === 0) {
+      students = [
+        { name: 'Alice Student', regNo: 'SCT1001', email: 'alice@student.com', password: 'pass', role: 'STUDENT' },
+        { name: 'Bob Student', regNo: 'SCT1002', email: 'bob@student.com', password: 'pass', role: 'STUDENT' }
+      ];
+      localStorage.setItem('students', JSON.stringify(students));
+    }
+    // Add registeredCourses and fees to all students
+    let updated = false;
+    students = students.map(s => {
+      if (!s.registeredCourses) {
+        s.registeredCourses = courses;
+        updated = true;
+      }
+      if (!s.fees) {
+        s.fees = { amount: 50000, status: 'Paid' };
+        updated = true;
+      }
+      return s;
+    });
+    if (updated) {
+      localStorage.setItem('students', JSON.stringify(students));
+    }
+    // Mock fees (for all students)
+    let fees = JSON.parse(localStorage.getItem('fees'));
+    if (!fees || !Array.isArray(fees) || fees.length === 0) {
+      fees = students.map(s => ({ regNo: s.regNo, name: s.name, amount: 50000, status: 'Paid' }));
+      localStorage.setItem('fees', JSON.stringify(fees));
+    }
+  })();
+
   // Sidebar menu items by role
   const studentMenu = [
     { id: 'dashboardCourses', label: 'My Courses' },
-    { id: 'dashboardRegisterUnits', label: 'Register for Units' },
     { id: 'dashboardFees', label: 'My Fees' }
   ];
   const staffMenu = [
@@ -61,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function getCourses() {
     return JSON.parse(localStorage.getItem('courses')) || [];
   }
-  // Helper to get students
+  // Helper to get students (with registeredCourses and fees)
   function getStudents() {
     return JSON.parse(localStorage.getItem('students')) || [];
   }
@@ -74,16 +111,20 @@ document.addEventListener('DOMContentLoaded', function() {
     return [];
   }
 
-  // Helper to show courses for students
+  // Helper to show courses for students (table)
   function showStudentCourses() {
     const section = document.getElementById('dashboardCourses');
-    const allCourses = getCourses();
     const registered = getRegisteredCourses();
     let html = '';
     if (registered.length === 0) {
       html += '<p>You have not registered for any courses yet.</p>';
     } else {
-      html += '<ul>' + registered.map(c => `<li><strong>${c.code}</strong>: ${c.title}</li>`).join('') + '</ul>';
+      html += `<table class="dashboard-table">
+        <thead><tr><th>Course Code</th><th>Course Title</th></tr></thead>
+        <tbody>
+        ${registered.map(c => `<tr><td>${c.code}</td><td>${c.title}</td></tr>`).join('')}
+        </tbody>
+      </table>`;
     }
     section.innerHTML = '<h3>My Courses</h3>' + html;
   }
@@ -117,7 +158,32 @@ document.addEventListener('DOMContentLoaded', function() {
     section.innerHTML = '<h3>Assign Courses</h3>' + html;
   }
 
-  // Section content rendering (now with course display)
+  // Helper to show all students for staff (table)
+  function showAllStudents() {
+    const section = document.getElementById('dashboardStudents');
+    const students = getStudents();
+    let html = '';
+    if (students.length === 0) {
+      html += '<p>No students found.</p>';
+    } else {
+      html += `<table class="dashboard-table">
+        <thead><tr><th>Name</th><th>Reg No</th><th>Courses</th><th>Fees</th></tr></thead>
+        <tbody>
+        ${students.map(s => `
+          <tr>
+            <td>${s.name}</td>
+            <td>${s.regNo}</td>
+            <td><ul style='margin:0;padding-left:1.2em;'>${(s.registeredCourses||[]).map(c => `<li>${c.code}: ${c.title}</li>`).join('')}</ul></td>
+            <td>Amount: KES ${s.fees ? s.fees.amount : 'N/A'}<br>Status: ${s.fees ? s.fees.status : 'N/A'}</td>
+          </tr>
+        `).join('')}
+        </tbody>
+      </table>`;
+    }
+    section.innerHTML = '<h3>All Students</h3>' + html;
+  }
+
+  // Section content rendering (now with table display)
   function renderSection(sectionId) {
     hideAllSections();
     dashboardWelcome.style.display = 'none';
@@ -131,12 +197,19 @@ document.addEventListener('DOMContentLoaded', function() {
     section.style.display = 'block';
     if (sectionId === 'dashboardCourses') {
       showStudentCourses();
-    } else if (sectionId === 'dashboardRegisterUnits') {
-      showRegisterUnits();
     } else if (sectionId === 'dashboardFees') {
-      section.innerHTML = `<h3>${user.role === 'STAFF' ? 'All Fees' : 'My Fees'}</h3><div id="feesList">(Fee details will be shown here)</div>`;
+      section.innerHTML = `<h3>${user.role === 'STAFF' ? 'All Fees' : 'My Fees'}</h3>`;
+      if (user.role === 'STUDENT') {
+        // Show student's own fees in a table
+        const fees = user.fees || { amount: 50000, status: 'Paid' };
+        section.innerHTML += `<table class="dashboard-table"><thead><tr><th>Amount</th><th>Status</th></tr></thead><tbody><tr><td>KES ${fees.amount}</td><td>${fees.status}</td></tr></tbody></table>`;
+      } else if (user.role === 'STAFF') {
+        // Show all fees in a table
+        const fees = JSON.parse(localStorage.getItem('fees')) || [];
+        section.innerHTML += `<table class="dashboard-table"><thead><tr><th>Name</th><th>Reg No</th><th>Amount</th><th>Status</th></tr></thead><tbody>${fees.map(f => `<tr><td>${f.name}</td><td>${f.regNo}</td><td>KES ${f.amount}</td><td>${f.status}</td></tr>`).join('')}</tbody></table>`;
+      }
     } else if (sectionId === 'dashboardStudents') {
-      section.innerHTML = '<h3>All Students</h3><div id="studentsList">(List of students will be shown here)</div>';
+      showAllStudents();
     } else if (sectionId === 'dashboardAssignCourses') {
       showAssignCourses();
     }

@@ -392,3 +392,54 @@ form input:focus {
 main, .form-main, .courses-main, .fees-main, .dashboard-content {
   flex: 1 0 auto;
 }
+
+/* --- Dashboard Table Styles --- */
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0 2em 0;
+  background: #f9fbfc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.dashboard-table th, .dashboard-table td {
+  padding: 0.85em 1em;
+  text-align: left;
+}
+.dashboard-table th {
+  background: #003366;
+  color: #fff;
+  font-weight: 600;
+  border-bottom: 2px solid #ffcc00;
+}
+.dashboard-table tr:nth-child(even) {
+  background: #f1f5fa;
+}
+.dashboard-table tr:nth-child(odd) {
+  background: #fff;
+}
+.dashboard-table td {
+  border-bottom: 1px solid #e0e7ef;
+}
+@media (max-width: 700px) {
+  .dashboard-table, .dashboard-table thead, .dashboard-table tbody, .dashboard-table th, .dashboard-table td, .dashboard-table tr {
+    display: block;
+    width: 100%;
+  }
+  .dashboard-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .dashboard-table tr {
+    margin-bottom: 1em;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  }
+  .dashboard-table td {
+    border: none;
+    padding: 0.7em 0.5em;
+    position: relative;
+  }
+}
