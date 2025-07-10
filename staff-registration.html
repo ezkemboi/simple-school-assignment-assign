@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Staff Registration - School of Computing</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">School of Computing</div>
+      <ul class="nav-links">
+        <li><a href="index.html" id="nav-home">Home</a></li>
+        <li><a href="student-registration.html" id="nav-student-register">Student Registration</a></li>
+        <li><a href="staff-registration.html" id="nav-staff-register">Staff Registration</a></li>
+        <li><a href="view-courses.html" id="nav-courses">Courses</a></li>
+        <li><a href="check-fees.html" id="nav-fees">Fees</a></li>
+        <li><a href="#" id="nav-logout" style="display:none;">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="form-main">
+    <div class="form-container">
+      <h2>Staff Registration</h2>
+      <form id="staffRegForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        <label for="staffId">Staff ID</label>
+        <input type="text" id="staffId" name="staffId" placeholder="e.g. ST12345" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <label for="department">Department</label>
+        <input type="text" id="department" name="department" placeholder="e.g. Computer Science" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a password" required>
+        <button type="submit" class="btn">Register</button>
+      </form>
+      <div id="staffRegMsg"></div>
+    </div>
+  </main>
+  <script src="scripts/session.js"></script>
+  <script src="scripts/staff.js"></script>
+</body>
+</html>

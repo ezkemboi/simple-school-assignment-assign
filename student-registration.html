@@ -1,17 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Registration</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Student Registration - School of Computing</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-<h2>Student Registration</h2>
-<form id="studentForm">
-    <input type="text" placeholder="Name" id="name" required />
-    <input type="text" placeholder="Reg Number" id="regNo" required />
-    <button type="submit">Register</button>
-</form>
-
-<script src="scripts/student.js"></script>
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">School of Computing</div>
+      <ul class="nav-links">
+        <li><a href="index.html" id="nav-home">Home</a></li>
+        <li><a href="student-registration.html" id="nav-student-register">Student Registration</a></li>
+        <li><a href="staff-registration.html" id="nav-staff-register">Staff Registration</a></li>
+        <li><a href="view-courses.html" id="nav-courses">Courses</a></li>
+        <li><a href="check-fees.html" id="nav-fees">Fees</a></li>
+        <li><a href="#" id="nav-logout" style="display:none;">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="form-main">
+    <div class="form-container">
+      <h2>Student Registration</h2>
+      <form id="studentRegForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        <label for="regNo">Registration Number</label>
+        <input type="text" id="regNo" name="regNo" placeholder="e.g. SCT123456" required>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a password" required>
+        <button type="submit" class="btn">Register</button>
+      </form>
+      <div id="studentRegMsg"></div>
+    </div>
+  </main>
+  <script src="scripts/session.js"></script>
+  <script src="scripts/student.js"></script>
 </body>
 </html>

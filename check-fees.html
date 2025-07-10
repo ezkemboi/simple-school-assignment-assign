@@ -1,27 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Fee Status</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Fees - School of Computing</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-<h2>Check Fee Payment</h2>
-<input type="text" id="studentId" placeholder="Enter Reg No" />
-<button onclick="checkFees()">Check</button>
-<p id="result"></p>
-
-<script>
-    function checkFees() {
-        const regNo = document.getElementById('studentId').value;
-        // Simulated lookup
-        const paid = ['ST001', 'ST003'];
-        const result = document.getElementById('result');
-        if (paid.includes(regNo)) {
-            result.textContent = `Student ${regNo} has PAID fees.`;
-        } else {
-            result.textContent = `Student ${regNo} has NOT PAID fees.`;
-        }
-    }
-</script>
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">School of Computing</div>
+      <ul class="nav-links">
+        <li><a href="index.html" id="nav-home">Home</a></li>
+        <li><a href="student-registration.html" id="nav-student-register">Student Registration</a></li>
+        <li><a href="staff-registration.html" id="nav-staff-register">Staff Registration</a></li>
+        <li><a href="view-courses.html" id="nav-courses">Courses</a></li>
+        <li><a href="check-fees.html" id="nav-fees">Fees</a></li>
+        <li><a href="#" id="nav-logout" style="display:none;">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main class="fees-main">
+    <div class="fees-container">
+      <h2>Fees</h2>
+      <div id="staffFeesSection" style="display:none;">
+        <h3>All Students' Fees</h3>
+        <table id="allFeesTable">
+          <thead>
+            <tr>
+              <th>Reg No</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="studentFeesSection" style="display:none;">
+        <h3>Your Fee Status</h3>
+        <table id="studentFeesTable">
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  <script src="scripts/session.js"></script>
+  <script src="scripts/fees.js"></script>
 </body>
 </html>
