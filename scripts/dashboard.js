@@ -111,18 +111,60 @@ document.addEventListener('DOMContentLoaded', function() {
     return [];
   }
 
+  // Helper to get mock fee breakdown
+  function getMockFeeDetails() {
+    return [
+      { item: 'Tuition Fee', amount: 40000, status: 'Paid' },
+      { item: 'Library Fee', amount: 2000, status: 'Paid' },
+      { item: 'Exam Fee', amount: 3000, status: 'Unpaid' },
+      { item: 'Hostel Fee', amount: 8000, status: 'Paid' },
+      { item: 'Sports Fee', amount: 2000, status: 'Unpaid' },
+      { item: 'Medical Fee', amount: 1500, status: 'Paid' },
+      { item: 'ICT Fee', amount: 1000, status: 'Paid' },
+      { item: 'Student Union Fee', amount: 500, status: 'Paid' }
+    ];
+  }
+
   // Helper to show courses for students (table)
   function showStudentCourses() {
     const section = document.getElementById('dashboardCourses');
-    const registered = getRegisteredCourses();
+    // Always fetch the latest courses from localStorage
+    const allCourses = getCourses();
+    console.log("-----", { allCourses })
     let html = '';
-    if (registered.length === 0) {
-      html += '<p>You have not registered for any courses yet.</p>';
+    if (allCourses.length === 0) {
+      html += '<p>No courses available.</p>';
+      html += '<button id="registerDefaultCoursesBtn" class="btn">Register Default Courses</button>';
+      section.innerHTML = '<h3>My Courses</h3>' + html;
+      // Add event listener after rendering
+      const btn = document.getElementById('registerDefaultCoursesBtn');
+      if (btn) {
+        btn.addEventListener('click', function() {
+          const defaultCourses = [
+            { code: 'BSCS101', title: 'Introduction to Computer Science' },
+            { code: 'BSCS201', title: 'Data Structures and Algorithms' },
+            { code: 'BSCS309', title: 'Internet Applications Programming' },
+            { code: 'BSCS315', title: 'Database Systems' },
+            { code: 'BSCS320', title: 'Operating Systems' },
+            { code: 'BSCS330', title: 'Software Engineering' },
+            { code: 'BSCS340', title: 'Computer Networks' },
+            { code: 'BSCS350', title: 'Artificial Intelligence' },
+            { code: 'BSCS360', title: 'Mobile Application Development' },
+            { code: 'BSCS370', title: 'Cyber Security' },
+            { code: 'BSCS380', title: 'Cloud Computing' },
+            { code: 'BSCS390', title: 'Web Development' },
+            { code: 'BSCS400', title: 'Machine Learning' }
+          ];
+          localStorage.setItem('courses', JSON.stringify(defaultCourses));
+          showStudentCourses();
+        });
+      }
+      return;
     } else {
       html += `<table class="dashboard-table">
         <thead><tr><th>Course Code</th><th>Course Title</th></tr></thead>
         <tbody>
-        ${registered.map(c => `<tr><td>${c.code}</td><td>${c.title}</td></tr>`).join('')}
+        ${allCourses.map(c => `<tr><td>${c.code}</td><td>${c.title}</td></tr>`).join('')}
         </tbody>
       </table>`;
     }
@@ -200,9 +242,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (sectionId === 'dashboardFees') {
       section.innerHTML = `<h3>${user.role === 'STAFF' ? 'All Fees' : 'My Fees'}</h3>`;
       if (user.role === 'STUDENT') {
-        // Show student's own fees in a table
-        const fees = user.fees || { amount: 50000, status: 'Paid' };
-        section.innerHTML += `<table class="dashboard-table"><thead><tr><th>Amount</th><th>Status</th></tr></thead><tbody><tr><td>KES ${fees.amount}</td><td>${fees.status}</td></tr></tbody></table>`;
+        // Show student's own fees in a detailed table
+        const feeDetails = getMockFeeDetails();
+        let total = feeDetails.reduce((sum, f) => sum + f.amount, 0);
+        section.innerHTML += `<table class="dashboard-table">
+          <thead><tr><th>Fee Item</th><th>Amount (KES)</th><th>Status</th></tr></thead>
+          <tbody>
+            ${feeDetails.map(f => `<tr><td>${f.item}</td><td>${f.amount}</td><td>${f.status}</td></tr>`).join('')}
+            <tr style="font-weight:bold;"><td>Total</td><td>${total}</td><td></td></tr>
+          </tbody>
+        </table>`;
       } else if (user.role === 'STAFF') {
         // Show all fees in a table
         const fees = JSON.parse(localStorage.getItem('fees')) || [];
