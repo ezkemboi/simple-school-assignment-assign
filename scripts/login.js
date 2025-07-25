@@ -7,6 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const role = document.getElementById('role').value;
     const errorDiv = document.getElementById('loginError');
     errorDiv.textContent = '';
+    errorDiv.className = '';
 
     let user = null;
     if (role === 'student') {
@@ -24,9 +25,11 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     }
 
     if (user) {
+        user.role = (role === 'student') ? 'STUDENT' : 'STAFF'; // Ensure role is always set
         localStorage.setItem('currentUser', JSON.stringify(user));
         window.location.href = 'dashboard.html';
     } else {
         errorDiv.textContent = 'Invalid credentials or role.';
+        errorDiv.className = 'error';
     }
 }); 

@@ -125,12 +125,123 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
   }
 
+  // Render student profile card
+  function renderStudentProfileCard() {
+    if (user.role !== 'STUDENT') {
+      document.getElementById('studentProfileCard').style.display = 'none';
+      return;
+    }
+    // Mock profile data
+    const profile = {
+      name: user.name || 'Jane Doe',
+      regNo: user.regNo || 'SCT123456',
+      program: 'BSc Computer Science',
+      email: user.email || 'jane.doe@gretsa.ac.ke',
+      avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'Jane Doe') + '&background=003366&color=fff&size=128'
+    };
+    const card = document.getElementById('studentProfileCard');
+    card.innerHTML = `
+      <div class="profile-card">
+        <img src="${profile.avatar}" alt="Avatar" class="profile-avatar">
+        <div class="profile-info">
+          <h2>${profile.name}</h2>
+          <div><strong>Reg No:</strong> ${profile.regNo}</div>
+          <div><strong>Program:</strong> ${profile.program}</div>
+          <div><strong>Email:</strong> <a href="mailto:${profile.email}">${profile.email}</a></div>
+        </div>
+      </div>
+    `;
+    card.style.display = 'flex';
+  }
+
+  // Render student quick links/notifications card
+  function renderStudentQuickLinks() {
+    if (user.role !== 'STUDENT') {
+      document.getElementById('studentQuickLinks').style.display = 'none';
+      return;
+    }
+    const card = document.getElementById('studentQuickLinks');
+    card.innerHTML = `
+      <div class="quick-links-card">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#" tabindex="0"><i class="fa fa-calendar-alt"></i> View Timetable</a></li>
+          <li><a href="#" tabindex="0"><i class="fa fa-user-friends"></i> Contact Advisor</a></li>
+          <li><a href="#" tabindex="0"><i class="fa fa-file-download"></i> Download Transcript</a></li>
+        </ul>
+      </div>
+    `;
+    card.style.display = 'block';
+  }
+
+  // Render staff profile card
+  function renderStaffProfileCard() {
+    if (user.role !== 'STAFF') {
+      document.getElementById('staffProfileCard').style.display = 'none';
+      return;
+    }
+    // Mock profile data
+    const profile = {
+      name: user.name || 'John Smith',
+      staffId: user.staffId || 'ST98765',
+      department: user.department || 'Computer Science',
+      email: user.email || 'john.smith@gretsa.ac.ke',
+      avatar: 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'John Smith') + '&background=003366&color=fff&size=128'
+    };
+    const card = document.getElementById('staffProfileCard');
+    card.innerHTML = `
+      <div class="profile-card staff-profile-card">
+        <img src="${profile.avatar}" alt="Avatar" class="profile-avatar">
+        <div class="profile-info">
+          <h2>${profile.name} <span class="badge badge-staff">Staff</span></h2>
+          <div><strong>Staff ID:</strong> ${profile.staffId}</div>
+          <div><strong>Department:</strong> ${profile.department}</div>
+          <div><strong>Email:</strong> <a href="mailto:${profile.email}">${profile.email}</a></div>
+        </div>
+      </div>
+    `;
+    card.style.display = 'flex';
+  }
+
+  // Render staff stat cards
+  function renderStaffStatCards() {
+    if (user.role !== 'STAFF') {
+      document.getElementById('staffStatCards').style.display = 'none';
+      return;
+    }
+    // Mock stats
+    const stats = [
+      { label: 'Total Students', value: 1200, icon: 'fa-users', color: 'var(--primary-blue)' },
+      { label: 'Courses', value: 24, icon: 'fa-book', color: 'var(--secondary-blue)' },
+      { label: 'Pending Fees', value: 150, icon: 'fa-exclamation-circle', color: '#c62828' }
+    ];
+    const card = document.getElementById('staffStatCards');
+    card.innerHTML = `
+      <div class="stat-cards">
+        ${stats.map(s => `
+          <div class="stat-card" style="--stat-color:${s.color}">
+            <div class="stat-icon"><i class="fa ${s.icon}"></i></div>
+            <div class="stat-value">${s.value}</div>
+            <div class="stat-label">${s.label}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    card.style.display = 'flex';
+  }
+
+  // Update dashboard heading based on role
+  function updateDashboardHeading() {
+    const heading = document.querySelector('.dashboard-heading');
+    if (!heading) return;
+    heading.textContent = user.role === 'STAFF' ? 'Staff Dashboard' : 'Student Dashboard';
+  }
+
   // Helper to show courses for students (table)
   function showStudentCourses() {
     const section = document.getElementById('dashboardCourses');
     // Always fetch the latest courses from localStorage
     const allCourses = getCourses();
-    console.log("-----", { allCourses })
     let html = '';
     if (allCourses.length === 0) {
       html += '<p>No courses available.</p>';
@@ -162,9 +273,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     } else {
       html += `<table class="dashboard-table">
-        <thead><tr><th>Course Code</th><th>Course Title</th><th>Lecturer</th><th>Students</th></tr></thead>
+        <thead><tr><th><i class='fa fa-hashtag'></i> Course Code</th><th><i class='fa fa-book'></i> Course Title</th><th><i class='fa fa-user-tie'></i> Lecturer</th><th><i class='fa fa-users'></i> Students</th><th>Status</th></tr></thead>
         <tbody>
-        ${allCourses.map(c => `<tr><td>${c.code}</td><td>${c.title}</td><td>${c.lecturer || '-'}</td><td>${c.students || '-'}</td></tr>`).join('')}
+        ${allCourses.map(c => `<tr><td>${c.code}</td><td>${c.title}</td><td>${c.lecturer || '-'} </td><td>${c.students || '-'} </td><td><span class='badge badge-ongoing' title='Currently enrolled' aria-label='Ongoing'>Ongoing</span></td></tr>`).join('')}
         </tbody>
       </table>`;
     }
@@ -248,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
         section.innerHTML += `<table class="dashboard-table">
           <thead><tr><th>Fee Item</th><th>Amount (KES)</th><th>Status</th></tr></thead>
           <tbody>
-            ${feeDetails.map(f => `<tr><td>${f.item}</td><td>${f.amount}</td><td>${f.status}</td></tr>`).join('')}
+            ${feeDetails.map(f => `<tr><td>${f.item}</td><td>${f.amount}</td><td><span class='badge badge-${f.status.toLowerCase()}' title='${f.status === 'Paid' ? 'Fee paid in full' : 'Fee not paid'}' aria-label='${f.status}'>${f.status}</span></td></tr>`).join('')}
             <tr style="font-weight:bold;"><td>Total</td><td>${total}</td><td></td></tr>
           </tbody>
         </table>`;
@@ -279,6 +390,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial render
   renderSidebar();
   renderWelcome();
+  renderStudentProfileCard();
+  renderStudentQuickLinks();
+  renderStaffProfileCard();
+  renderStaffStatCards();
+  updateDashboardHeading();
   dashboardWelcome.style.display = 'block';
 
   // Show first section by default

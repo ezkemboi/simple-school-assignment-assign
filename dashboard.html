@@ -19,14 +19,22 @@
     </div>
   </nav>
   <div class="dashboard">
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="Dashboard Navigation">
       <ul id="sidebarMenu">
-        <!-- Populated by JS based on role -->
+        <!-- Populated by JS based on role, now with icons -->
       </ul>
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar"><i class="fa fa-bars"></i></button>
     </aside>
     <main class="dashboard-content" id="dashboardContent">
-      <!-- Dynamic content loads here -->
+      <h1 class="dashboard-heading">Student Dashboard</h1>
+      <!-- Student Profile Card (rendered by JS for students) -->
+      <div id="studentProfileCard" style="display:none;"></div>
+      <div id="studentQuickLinks" style="display:none;"></div>
+      <!-- Staff Profile Card and Stat Cards (rendered by JS for staff) -->
+      <div id="staffProfileCard" style="display:none;"></div>
+      <div id="staffStatCards" style="display:none;"></div>
       <div id="dashboardWelcome"></div>
+      <div id="staffSearchBar" style="display:none; margin-bottom:1.5em;"></div>
       <section id="dashboardCourses" style="display:none;"></section>
       <section id="dashboardFees" style="display:none;"></section>
       <section id="dashboardStudents" style="display:none;"></section>

@@ -6,24 +6,27 @@
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <div class="logo">
-                <img src="./logo.png" class="header-logo"  height="50px" width="100px"/>
+                <img src="./logo.png" class="header-logo" height="50" width="100" alt="Gretsa University Logo"/>
+                <span>Gretsa University</span>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html" id="nav-home">Home</a></li>
-                <li><a href="student-registration.html" id="nav-student-register">Student Registration</a></li>
-                <li><a href="staff-registration.html" id="nav-staff-register">Staff Registration</a></li>
-                <li><a href="#" id="nav-logout" style="display:none;">Logout</a></li>
+                <li><a href="index.html" id="nav-home"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="student-registration.html" id="nav-student-register"><i class="fa fa-user-graduate"></i> Student Registration</a></li>
+                <li><a href="staff-registration.html" id="nav-staff-register"><i class="fa fa-chalkboard-teacher"></i> Staff Registration</a></li>
+                <li><a href="#" id="nav-logout" style="display:none;"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </div>
     </nav>
     <main class="form-main">
         <div class="form-container">
-            <h2>Login</h2>
+            <h2 style="text-align:center; color:var(--primary-blue); font-size:2em; margin-bottom:1em;"><i class="fa fa-sign-in-alt"></i> Login</h2>
             <form id="loginForm">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
@@ -39,13 +42,13 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn">Login</button>
+                <button type="submit" class="btn"><i class="fa fa-sign-in-alt"></i> Login</button>
             </form>
             <div id="loginError" class="error-message"></div>
             <div class="register-links">
                 <span>Don't have an account?</span>
-                <a href="student-registration.html" class="register-link">Register as Student</a>
-                <a href="staff-registration.html" class="register-link">Register as Staff</a>
+                <a href="student-registration.html" class="register-link"><i class="fa fa-user-plus"></i> Register as Student</a>
+                <a href="staff-registration.html" class="register-link"><i class="fa fa-user-tie"></i> Register as Staff</a>
             </div>
         </div>
     </main>
@@ -54,18 +57,19 @@
             <div class="footer-brand">
                 <img src="./logo.png" alt="Gretsa University Logo" class="footer-logo">
                 <div>
+                    <div class="footer-title">Gretsa University</div>
                     <div class="footer-school">The Best University in Kenya</div>
                 </div>
             </div>
             <div class="footer-contact">
-                <div>Email: <a href="mailto:info@gretsauniversity.ac.ke">info@gretsauniversity.ac.ke</a></div>
-                <div>Phone: <a href="tel:+254700000000">+254 700 000 000</a></div>
-                <div>Address: Thika, Kenya</div>
+                <div><i class="fa fa-envelope"></i> <a href="mailto:info@gretsauniversity.ac.ke">info@gretsauniversity.ac.ke</a></div>
+                <div><i class="fa fa-phone"></i> <a href="tel:+254712959293">+254 712 959 293</a></div>
+                <div><i class="fa fa-map-marker-alt"></i> Thika, Kenya</div>
             </div>
             <div class="footer-social">
-                <a href="#" title="Facebook" class="footer-social-icon">🌐</a>
-                <a href="#" title="Twitter" class="footer-social-icon">🐦</a>
-                <a href="#" title="Instagram" class="footer-social-icon">📸</a>
+                <a href="#" title="Facebook" class="footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" title="Twitter" class="footer-social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="Instagram" class="footer-social-icon"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
         <div class="footer-bottom">

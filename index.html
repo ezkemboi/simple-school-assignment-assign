@@ -6,33 +6,47 @@
   <link rel="stylesheet" href="styles.css">
   <!-- Google Fonts for modern typography -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="container">
       <div class="logo">
-        <img src="./logo.png" class="header-logo"  height="50px" width="100px"/>
+        <img src="./logo.png" class="header-logo" height="50" width="100" alt="Gretsa University Logo"/>
+        <span>Gretsa University</span>
       </div>
-      <ul class="nav-links">
-        <li><a href="index.html" id="nav-home">Home</a></li>
-        <li><a href="student-registration.html" id="nav-student-register">Student Registration</a></li>
-        <li><a href="staff-registration.html" id="nav-staff-register">Staff Registration</a></li>
-        <li><a href="#" id="nav-logout" style="display:none;">Logout</a></li>
+      <ul class="nav-links" id="mainNavLinks">
+        <li><a href="index.html" id="nav-home" class="active"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="student-registration.html" id="nav-student-register"><i class="fa fa-user-graduate"></i> Student Registration</a></li>
+        <li><a href="staff-registration.html" id="nav-staff-register"><i class="fa fa-chalkboard-teacher"></i> Staff Registration</a></li>
+        <li><a href="#" id="nav-logout" style="display:none;"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
+        <li id="nav-profile-dropdown" style="display:none;">
+          <div class="profile-dropdown">
+            <img src="https://ui-avatars.com/api/?name=User&background=3949ab&color=fff&size=32" class="profile-avatar-mini" id="nav-profile-avatar" alt="Profile"/>
+            <div class="profile-dropdown-content" id="profileDropdownContent">
+              <div class="profile-dropdown-name" id="profileDropdownName">User Name</div>
+              <div class="profile-dropdown-email" id="profileDropdownEmail">user@email.com</div>
+              <a href="#" id="profileDropdownLogout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
   </nav>
 
   <main class="home-main">
     <section class="welcome">
-      <img src="./logo.png" alt="Gretsa University Logo" class="home-logo">
-      <h2>The Best University in Kenya</h2>
-      <p>
-        Welcome to the Distance Learning Portal. Register as a student or staff, view and manage courses, and check fee status with ease.
+      <img src="./logo.png" alt="Gretsa University Logo" class="home-logo" style="width:120px; height:auto; margin-bottom:1em; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+      <h1>Welcome to Gretsa University Portal</h1>
+      <h2 style="color:var(--primary-blue); font-size:1.3em; font-weight:500; margin-bottom:1em;">The Best University in Kenya</h2>
+      <p style="font-size:1.1em; color:var(--text-dark); max-width:600px; margin:0 auto 2em auto;">
+        Register as a student or staff, view and manage courses, and check fee status with ease. Join a vibrant academic community dedicated to excellence and innovation.
       </p>
       <div class="quick-links">
-        <a href="student-registration.html" class="btn">Student Registration</a>
-        <a href="staff-registration.html" class="btn">Staff Registration</a>
+        <a href="student-registration.html" class="btn"><i class="fa fa-user-plus"></i> Student Registration</a>
+        <a href="staff-registration.html" class="btn"><i class="fa fa-user-tie"></i> Staff Registration</a>
       </div>
     </section>
   </main>
@@ -41,19 +55,19 @@
       <div class="footer-brand">
         <img src="./logo.png" alt="Gretsa University Logo" class="footer-logo">
         <div>
-          
+          <div class="footer-title">Gretsa University</div>
           <div class="footer-school">The Best University in Kenya</div>
         </div>
       </div>
       <div class="footer-contact">
-        <div>Email: <a href="mailto:info@gretsauniversity.ac.ke">info@gretsauniversity.ac.ke</a></div>
-        <div>Phone: <a href="tel:+254700000000">+254 700 000 000</a></div>
-        <div>Address: Thika, Kenya</div>
+        <div><i class="fa fa-envelope"></i> <a href="mailto:info@gretsauniversity.ac.ke">info@gretsauniversity.ac.ke</a></div>
+        <div><i class="fa fa-phone"></i> <a href="tel:+254712959293">+254 712 959 293</a></div>
+        <div><i class="fa fa-map-marker-alt"></i> Thika, Kenya</div>
       </div>
       <div class="footer-social">
-        <a href="#" title="Facebook" class="footer-social-icon">🌐</a>
-        <a href="#" title="Twitter" class="footer-social-icon">🐦</a>
-        <a href="#" title="Instagram" class="footer-social-icon">📸</a>
+        <a href="#" title="Facebook" class="footer-social-icon"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Twitter" class="footer-social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="#" title="Instagram" class="footer-social-icon"><i class="fab fa-instagram"></i></a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -61,5 +75,44 @@
     </div>
   </footer>
   <script src="scripts/session.js"></script>
+  <script>
+// Navbar login state/profile dropdown logic
+(function() {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const navStudentRegister = document.getElementById('nav-student-register');
+  const navStaffRegister = document.getElementById('nav-staff-register');
+  const navLogout = document.getElementById('nav-logout');
+  const navProfileDropdown = document.getElementById('nav-profile-dropdown');
+  const navProfileAvatar = document.getElementById('nav-profile-avatar');
+  const profileDropdownName = document.getElementById('profileDropdownName');
+  const profileDropdownEmail = document.getElementById('profileDropdownEmail');
+  const profileDropdownLogout = document.getElementById('profileDropdownLogout');
+  if (user) {
+    navStudentRegister.style.display = 'none';
+    navStaffRegister.style.display = 'none';
+    navLogout.style.display = 'none';
+    navProfileDropdown.style.display = 'block';
+    navProfileAvatar.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.name || 'User') + '&background=3949ab&color=fff&size=32';
+    profileDropdownName.textContent = user.name || 'User Name';
+    profileDropdownEmail.textContent = user.email || '';
+    profileDropdownLogout.onclick = function(e) {
+      e.preventDefault();
+      localStorage.removeItem('currentUser');
+      window.location.href = 'index.html';
+    };
+    navProfileDropdown.onmouseenter = function() {
+      document.getElementById('profileDropdownContent').style.display = 'block';
+    };
+    navProfileDropdown.onmouseleave = function() {
+      document.getElementById('profileDropdownContent').style.display = 'none';
+    };
+  } else {
+    navStudentRegister.style.display = 'inline';
+    navStaffRegister.style.display = 'inline';
+    navLogout.style.display = 'none';
+    navProfileDropdown.style.display = 'none';
+  }
+})();
+</script>
 </body>
 </html>
