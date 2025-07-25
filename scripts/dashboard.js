@@ -141,19 +141,19 @@ document.addEventListener('DOMContentLoaded', function() {
       if (btn) {
         btn.addEventListener('click', function() {
           const defaultCourses = [
-            { code: 'BSCS101', title: 'Introduction to Computer Science' },
-            { code: 'BSCS201', title: 'Data Structures and Algorithms' },
-            { code: 'BSCS309', title: 'Internet Applications Programming' },
-            { code: 'BSCS315', title: 'Database Systems' },
-            { code: 'BSCS320', title: 'Operating Systems' },
-            { code: 'BSCS330', title: 'Software Engineering' },
-            { code: 'BSCS340', title: 'Computer Networks' },
-            { code: 'BSCS350', title: 'Artificial Intelligence' },
-            { code: 'BSCS360', title: 'Mobile Application Development' },
-            { code: 'BSCS370', title: 'Cyber Security' },
-            { code: 'BSCS380', title: 'Cloud Computing' },
-            { code: 'BSCS390', title: 'Web Development' },
-            { code: 'BSCS400', title: 'Machine Learning' }
+            { code: 'BSCS101', title: 'Introduction to Computer Science', lecturer: 'Dr. Alice Kimani', students: 85 },
+            { code: 'BSCS201', title: 'Data Structures and Algorithms', lecturer: 'Prof. John Mwangi', students: 60 },
+            { code: 'BSCS309', title: 'Internet Applications Programming', lecturer: 'Ms. Grace Otieno', students: 75 },
+            { code: 'BSCS315', title: 'Database Systems', lecturer: 'Dr. Peter Njoroge', students: 90 },
+            { code: 'BSCS320', title: 'Operating Systems', lecturer: 'Dr. Susan Wambui', students: 55 },
+            { code: 'BSCS330', title: 'Software Engineering', lecturer: 'Prof. David Ochieng', students: 120 },
+            { code: 'BSCS340', title: 'Computer Networks', lecturer: 'Dr. Jane Muthoni', students: 45 },
+            { code: 'BSCS350', title: 'Artificial Intelligence', lecturer: 'Dr. Brian Kiptoo', students: 70 },
+            { code: 'BSCS360', title: 'Mobile Application Development', lecturer: 'Ms. Carol Achieng', students: 40 },
+            { code: 'BSCS370', title: 'Cyber Security', lecturer: 'Mr. Samuel Kariuki', students: 30 },
+            { code: 'BSCS380', title: 'Cloud Computing', lecturer: 'Dr. Faith Mutua', students: 50 },
+            { code: 'BSCS390', title: 'Web Development', lecturer: 'Ms. Linda Chebet', students: 110 },
+            { code: 'BSCS400', title: 'Machine Learning', lecturer: 'Dr. Kevin Omondi', students: 65 }
           ];
           localStorage.setItem('courses', JSON.stringify(defaultCourses));
           showStudentCourses();
@@ -162,9 +162,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     } else {
       html += `<table class="dashboard-table">
-        <thead><tr><th>Course Code</th><th>Course Title</th></tr></thead>
+        <thead><tr><th>Course Code</th><th>Course Title</th><th>Lecturer</th><th>Students</th></tr></thead>
         <tbody>
-        ${allCourses.map(c => `<tr><td>${c.code}</td><td>${c.title}</td></tr>`).join('')}
+        ${allCourses.map(c => `<tr><td>${c.code}</td><td>${c.title}</td><td>${c.lecturer || '-'}</td><td>${c.students || '-'}</td></tr>`).join('')}
         </tbody>
       </table>`;
     }

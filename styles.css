@@ -21,6 +21,9 @@ body {
   color: #fff;
   padding: 0.5em 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .navbar .container {
@@ -191,6 +194,10 @@ form input:focus {
   font-size: 1em;
   bottom: 0;
   flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  margin-top: auto;
 }
 
 .footer-content {
@@ -396,6 +403,7 @@ form input:focus {
 
 main, .form-main, .courses-main, .fees-main, .dashboard-content {
   flex: 1 0 auto;
+  overflow-y: auto;
 }
 
 /* --- Dashboard Table Styles --- */

@@ -1,0 +1,24 @@
+{
+  "name": "simple-school-assignment-assign",
+  "version": "1.0.0",
+  "description": "This is school work assignment",
+  "homepage": "https://github.com/ezkemboi/simple-school-assignment-assign#readme",
+  "bugs": {
+    "url": "https://github.com/ezkemboi/simple-school-assignment-assign/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ezkemboi/simple-school-assignment-assign.git"
+  },
+  "license": "ISC",
+  "author": "Ezrqn Kemboi",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
