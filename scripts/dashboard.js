@@ -45,15 +45,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   })();
 
-  // Sidebar menu items by role
+  // Sidebar menu items by role (now with icons)
   const studentMenu = [
-    { id: 'dashboardCourses', label: 'My Courses' },
-    { id: 'dashboardFees', label: 'My Fees' }
+    { id: 'dashboardCourses', label: 'My Courses', icon: 'fa-book-open' },
+    { id: 'dashboardFees', label: 'My Fees', icon: 'fa-money-bill-wave' }
   ];
   const staffMenu = [
-    { id: 'dashboardStudents', label: 'All Students' },
-    { id: 'dashboardAssignCourses', label: 'Assign Courses' },
-    { id: 'dashboardFees', label: 'All Fees' }
+    { id: 'dashboardStudents', label: 'All Students', icon: 'fa-users' },
+    { id: 'dashboardAssignCourses', label: 'Assign Courses', icon: 'fa-tasks' },
+    { id: 'dashboardFees', label: 'All Fees', icon: 'fa-money-check-alt' }
   ];
 
   const sidebarMenu = document.getElementById('sidebarMenu');
@@ -75,17 +75,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Populate sidebar
-  function renderSidebar() {
+  // Populate sidebar with icons and active highlighting
+  function renderSidebar(activeSection) {
     sidebarMenu.innerHTML = '';
     const menu = user.role === 'STAFF' ? staffMenu : studentMenu;
     menu.forEach(item => {
       const li = document.createElement('li');
-      li.textContent = item.label;
+      li.innerHTML = `<i class="fa ${item.icon}"></i> <span class="sidebar-label">${item.label}</span>`;
       li.className = 'sidebar-link';
       li.dataset.section = item.id;
       li.tabIndex = 0;
+      if (activeSection === item.id) li.classList.add('active');
       sidebarMenu.appendChild(li);
+    });
+  }
+
+  // Sidebar toggle for mobile
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.toggle('collapsed');
     });
   }
 
@@ -311,29 +320,74 @@ document.addEventListener('DOMContentLoaded', function() {
     section.innerHTML = '<h3>Assign Courses</h3>' + html;
   }
 
-  // Helper to show all students for staff (table)
-  function showAllStudents() {
+  // Staff search bar
+  function renderStaffSearchBar() {
+    const bar = document.getElementById('staffSearchBar');
+    if (user.role !== 'STAFF') {
+      bar.style.display = 'none';
+      return;
+    }
+    bar.innerHTML = `
+      <input type="text" id="staffStudentSearch" class="search-input" placeholder="Search students by name, reg no, or email..." aria-label="Search students">
+    `;
+    bar.style.display = 'block';
+    document.getElementById('staffStudentSearch').addEventListener('input', function(e) {
+      showAllStudents(e.target.value);
+    });
+  }
+
+  // Helper to show all students for staff (table with actions)
+  function showAllStudents(searchTerm = '') {
     const section = document.getElementById('dashboardStudents');
     const students = getStudents();
+    let filtered = students;
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      filtered = students.filter(s =>
+        (s.name && s.name.toLowerCase().includes(term)) ||
+        (s.regNo && s.regNo.toLowerCase().includes(term)) ||
+        (s.email && s.email.toLowerCase().includes(term))
+      );
+    }
     let html = '';
-    if (students.length === 0) {
+    if (filtered.length === 0) {
       html += '<p>No students found.</p>';
     } else {
       html += `<table class="dashboard-table">
-        <thead><tr><th>Name</th><th>Reg No</th><th>Courses</th><th>Fees</th></tr></thead>
+        <thead><tr><th>Name</th><th>Reg No</th><th>Courses</th><th>Fees</th><th>Actions</th></tr></thead>
         <tbody>
-        ${students.map(s => `
-          <tr>
+        ${filtered.map((s, idx) => `
+          <tr data-student-idx="${students.indexOf(s)}">
             <td>${s.name}</td>
             <td>${s.regNo}</td>
             <td><ul style='margin:0;padding-left:1.2em;'>${(s.registeredCourses||[]).map(c => `<li>${c.code}: ${c.title}</li>`).join('')}</ul></td>
-            <td>Amount: KES ${s.fees ? s.fees.amount : 'N/A'}<br>Status: ${s.fees ? s.fees.status : 'N/A'}</td>
+            <td>Amount: KES ${s.fees ? s.fees.amount : 'N/A'}<br>Status: <span class='badge badge-${(s.fees && s.fees.status === 'Paid') ? 'paid' : 'unpaid'}'>${s.fees ? s.fees.status : 'N/A'}</span></td>
+            <td>
+              <button class='btn btn-secondary btn-sm btn-view' title='View'>View</button>
+              <button class='btn btn-secondary btn-sm btn-edit' title='Edit'>Edit</button>
+              <button class='btn btn-secondary btn-sm btn-assign' title='Assign Course'>Assign Course</i></button>
+            </td>
           </tr>
         `).join('')}
         </tbody>
       </table>`;
     }
     section.innerHTML = '<h3>All Students</h3>' + html;
+
+    // Add event listeners for action buttons (event delegation)
+    section.querySelector('tbody')?.addEventListener('click', function(e) {
+      const tr = e.target.closest('tr');
+      if (!tr) return;
+      const idx = tr.getAttribute('data-student-idx');
+      const student = students[idx];
+      if (e.target.closest('.btn-view')) {
+        alert(`Student Info:\nName: ${student.name}\nReg No: ${student.regNo}\nEmail: ${student.email || ''}\nDepartment: ${student.department || ''}`);
+      } else if (e.target.closest('.btn-edit')) {
+        alert(`Edit Student: ${student.name} (Feature coming soon)`);
+      } else if (e.target.closest('.btn-assign')) {
+        alert(`Assign Course to: ${student.name} (Feature coming soon)`);
+      }
+    });
   }
 
   // Section content rendering (now with table display)
@@ -348,6 +402,8 @@ document.addEventListener('DOMContentLoaded', function() {
       dashboardContent.appendChild(section);
     }
     section.style.display = 'block';
+    renderSidebar(sectionId); // highlight active
+    if (user.role === 'STAFF') renderStaffSearchBar();
     if (sectionId === 'dashboardCourses') {
       showStudentCourses();
     } else if (sectionId === 'dashboardFees') {
@@ -366,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (user.role === 'STAFF') {
         // Show all fees in a table
         const fees = JSON.parse(localStorage.getItem('fees')) || [];
-        section.innerHTML += `<table class="dashboard-table"><thead><tr><th>Name</th><th>Reg No</th><th>Amount</th><th>Status</th></tr></thead><tbody>${fees.map(f => `<tr><td>${f.name}</td><td>${f.regNo}</td><td>KES ${f.amount}</td><td>${f.status}</td></tr>`).join('')}</tbody></table>`;
+        section.innerHTML += `<table class="dashboard-table"><thead><tr><th>Name</th><th>Reg No</th><th>Amount</th><th>Status</th></tr></thead><tbody>${fees.map(f => `<tr><td>${f.name}</td><td>${f.regNo}</td><td>KES ${f.amount}</td><td><span class='badge badge-${f.status === 'Paid' ? 'paid' : 'unpaid'}'>${f.status}</span></td></tr>`).join('')}</tbody></table>`;
       }
     } else if (sectionId === 'dashboardStudents') {
       showAllStudents();
@@ -377,8 +433,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Sidebar click handler
   sidebarMenu.addEventListener('click', function(e) {
-    if (e.target && e.target.classList.contains('sidebar-link')) {
-      renderSection(e.target.dataset.section);
+    if (e.target && e.target.closest('.sidebar-link')) {
+      const li = e.target.closest('.sidebar-link');
+      renderSection(li.dataset.section);
     }
   });
   sidebarMenu.addEventListener('keydown', function(e) {
@@ -396,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
   renderStaffStatCards();
   updateDashboardHeading();
   dashboardWelcome.style.display = 'block';
-
+  if (user.role === 'STAFF') renderStaffSearchBar();
   // Show first section by default
   const firstMenu = sidebarMenu.querySelector('.sidebar-link');
   if (firstMenu) {

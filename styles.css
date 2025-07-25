@@ -151,6 +151,15 @@ body {
   border-color: var(--accent);
 }
 
+.btn-sm {
+  padding: 0.3em 0.7em;
+  font-size: 0.95em;
+  margin-right: 0.3em;
+  margin-bottom: 0.2em;
+  display: inline-flex;
+  align-items: center;
+}
+
 /* --- Forms --- */
 .form-main, .courses-main, .fees-main {
   display: flex;
@@ -469,6 +478,7 @@ main, .form-main, .courses-main, .fees-main, .dashboard-content {
 }
 .dashboard-table td {
   border-bottom: 1px solid #e0e7ef;
+  overflow: visible;
 }
 @media (max-width: 700px) {
   .dashboard-table, .dashboard-table thead, .dashboard-table tbody, .dashboard-table th, .dashboard-table td, .dashboard-table tr {
@@ -766,4 +776,59 @@ main, .form-main, .courses-main, .fees-main, .dashboard-content {
 .badge-completed {
   background: var(--accent);
   color: var(--primary);
+}
+
+.btn-sm i, .btn i {
+  color: var(--primary);
+  font-size: 1em;
+  transition: color 0.2s;
+}
+.btn-sm:hover i, .btn:hover i {
+  color: var(--accent);
+}
+
+.btn-action {
+  background: var(--secondary);
+  color: var(--surface);
+  border: none;
+}
+.btn-action i {
+  color: var(--surface);
+}
+.btn-action:hover, .btn-action:focus {
+  background: var(--primary);
+  color: var(--accent);
+}
+.btn-action:hover i, .btn-action:focus i {
+  color: var(--accent);
+}
+
+.btn-view {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+}
+.btn-view:hover, .btn-view:focus {
+  background: #1565c0;
+  color: #ffb300;
+}
+
+.btn-edit {
+  background: #ffa000;
+  color: #fff;
+  border: none;
+}
+.btn-edit:hover, .btn-edit:focus {
+  background: #ff6f00;
+  color: #fff;
+}
+
+.btn-assign {
+  background: #43a047;
+  color: #fff;
+  border: none;
+}
+.btn-assign:hover, .btn-assign:focus {
+  background: #2e7d32;
+  color: #fff;
 }
